@@ -1,0 +1,23 @@
+pipeline{
+    agent any
+    stages{
+        stage("Clone git"){
+            steps{
+                git branch: 'main', 
+                credentialsId: '758d5740-d100-4947-bda6-e1c3a289ebb9', 
+                url: 'https://github.com/viki1112/vikSPE.git'   
+            }
+        }
+        stage('Build Code'){
+            steps{
+                sh "python3 calc.py"
+            }
+        }
+        stage('Test Code'){
+            steps{
+                sh "python3 test_calc.py"
+            }
+        }
+    }
+}
+
