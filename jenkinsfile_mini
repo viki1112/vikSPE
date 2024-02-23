@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE_NAME = 'calculator'
+        GITHUB_REPO_URL = 'https://github.com/viki1112/vikSPE.git'
+    }
+    stages {
+        stage("Git Clone") {
+            steps {
+                git branch: 'main', 
+                credentialsId: '758d5740-d100-4947-bda6-e1c3a289ebb9', 
+                url: "${GITHUB_REPO_URL}"   
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "python3 calc.py sqrt 9"
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "python3 test_calc.py"
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${DOCKER_IMAGE_NAME}", '.')
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', 'vikidocker') {
+                        sh "docker tag ${DOCKER_IMAGE_NAME} viki1112/calculator:latest"
+                        sh "docker push viki1112/calculator:latest"
+                    }
+                }
+            }
+        }
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                        colorized: true,
+                        installation: 'ansible',
+                        playbook: 'deploy.yml',
+                        inventory: 'inventory.ini'
+                    )
+                }
+            }
+        }
+    }
+}
+
