@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "python3 calc.py sqrt 9"
+                sh "python3 calc.py 1 9"
             }
         }
         stage('Test') {
