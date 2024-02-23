@@ -49,21 +49,21 @@ def power(base, exponent):
 #     else:
 #         print("Invalid Operation")
 def main():
-    parser = argparse.ArgumentParser(description='Perform a mathematical operation.')
-    parser.add_argument('operation', type=str, choices=['sqrt', 'fact', 'log', 'pow'],
-                        help='The operation to perform: sqrt, fact, log, pow')
-    parser.add_argument('number', type=float, help='The number (for sqrt, fact, log) or base (for pow)')
+    parser = argparse.ArgumentParser(description='Enter an operation: ')
+    parser.add_argument('operation', type=str, choices=['1', '2', '3', '4'],
+                        help='The operation to perform: root, factorial, log, power')
+    parser.add_argument('number', type=float, help='The number (for root, factorial, log) or base (for pow)')
     parser.add_argument('--exponent', type=float, help='The exponent (required for pow operation)', default=1.0)
 
     args = parser.parse_args()
 
-    if args.operation == 'sqrt':
+    if args.operation == '1':
         root(args.number)
-    elif args.operation == 'fact':
+    elif args.operation == '2':
         factorial(int(args.number))  # factorial expects an int
-    elif args.operation == 'log':
+    elif args.operation == '3':
         log(args.number)
-    elif args.operation == 'pow':
+    elif args.operation == '4':
         power(args.number, args.exponent)
 
 if __name__=="__main__":
