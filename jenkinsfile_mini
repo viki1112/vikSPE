@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh "chmod u+x calc.py"
-                sh 'printf "1\n25\n" | python3 calc.py'
+                sh 'printf "2\n3\n" | python3 calc.py'
             }
         }
         stage('Test') {
