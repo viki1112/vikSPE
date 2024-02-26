@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+#this is python code
+
 import math
 
 def root(n):
